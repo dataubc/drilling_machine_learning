@@ -3,11 +3,15 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 import pandas as pd
 from joblib import dump, load
-app = Flask(__name__)
-filename = "model.pkl"
 
-with open(filename, 'rb') as file:
-    model = load(file)
+app = Flask(__name__)
+filename1 = "model_ift.pkl"
+filename2 = "model_volume.pkl"
+
+with open(filename1, 'rb') as file:
+    model_ift = load(file)
+with open(filename2, 'rb') as file:
+    model_volume = load(file)
 
 
 @app.route('/')
@@ -30,10 +34,14 @@ def predict():
     #
     ll = [X_test_new]
     new_data = pd.DataFrame(ll, columns=['Gas', 'Water_content', 'time_minutes'])
-    prediction = model.predict(new_data)[0]
+    prediction = model_ift.predict(new_data)[0]
     output = round(prediction, 2)
 
-    return render_template('index.html', prediction_text='Estimated IFT =  {} mN/m'.format(output))
+    prediction2 = model_volume.predict(new_data)[0]
+    output2 = round(prediction2, 2)
+
+    return render_template('index.html', prediction_text2='Estimated IFT =  {} mN/. Estimated Volume Change '
+                                                          'Ratio = {} '.format(output, output2))
 
 
 if __name__ == "__main__":

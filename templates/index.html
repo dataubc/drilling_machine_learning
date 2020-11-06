@@ -20,12 +20,13 @@
     	<input type="text" name="gas_type" placeholder="Enter Gas type, Co2 or CH4" required="required" />
         <input type="text" name="water_content" placeholder="Enter Water Content, 0-1" required="required" />
         <input type="text" name="time" placeholder="Enter time elapsed since starting the experiment in minutes" required="required" />
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict IFT</button>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict IFT and Volume Ratio Change</button>
     </form>
 
    <br>
    <br>
    {{ prediction_text }}
+     {{ prediction_text2 }}
 
  </div>
 
